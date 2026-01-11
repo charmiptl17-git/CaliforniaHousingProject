@@ -5,9 +5,8 @@ import pickle
 
 st.title("""Housing Price Prediction app which we design using machine learning and for the predictions of the price of the house design by XYZ Brokerage company""")
 
-lr_mod=pickle.load(open('Model\model_lr.pkl','rb'))
-gb_mod=pickle.load(open('Model\model_gb.pkl','rb'))
-rf_mod=pickle.load(open('Model\model_rf.pkl','rb'))
+lr_mod=pickle.load(open('model_lr.pkl','rb'))
+gb_mod=pickle.load(open('model_gb.pkl','rb'))
 
 l=['longitude', 'latitude', 'housing_median_age', 'total_rooms',
        'total_bedrooms', 'population', 'households', 'median_income',
@@ -20,13 +19,13 @@ for i in l:
 unknown_data=pd.DataFrame(input_data,index=[0])
 
 st.subheader("Select the model you want to use for prediction")
-model_option=st.selectbox('Select the model', ('Linear Regression', 'Gradient Boosting', 'Random Forest'))
+model_option=st.selectbox('Select the model', ('Linear Regression', 'Gradient Boosting'))
 if model_option=='Linear Regression':
     choose_model=lr_mod
-elif model_option=='Gradient Boosting':
+else: 
     choose_model=gb_mod
-else:
-    choose_model=rf_mod
+       
 if st.button('Predict the price'):
     result=choose_model.predict(unknown_data)
+
     st.subheader(f'The predicted price of the house is: ${result[0]}')
